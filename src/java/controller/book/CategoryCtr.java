@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "category")
 public class CategoryCtr {
 
+    //get list of book by id category
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody
     ArrayList<Book> bookByCategory(@RequestParam("idCt") String idCt) {
@@ -43,6 +44,7 @@ public class CategoryCtr {
         return null;
     }
 
+    //get all category
     @RequestMapping(value = "/getAll", method = RequestMethod.POST)
     public @ResponseBody
     ArrayList<Category> getAllCategory() {

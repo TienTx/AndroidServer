@@ -9,7 +9,6 @@
 //import com.google.gson.GsonBuilder;
 //import com.google.gson.JsonSyntaxException;
 //import com.google.gson.reflect.TypeToken;
-//import controller.LoadDefaultData;
 //import dao.book.BookDAO;
 //import entity.book.Book;
 //import entity.book.BookSet;
@@ -34,39 +33,25 @@
 // * @author zOzDarKzOz
 // */
 //@Controller
-//@RequestMapping(value = "/search.html")
+//@RequestMapping(value = "/search")
 //public class SearchCtr {
 //
 //    @RequestMapping(method = RequestMethod.GET)
-//    public ModelAndView search(
-//            ModelAndView model, HttpServletRequest request,
-//            HttpSession session, HttpServletResponse response,
+//    public ArrayList<Book> search(
 //            @RequestParam(value = "op", required = false) String option,
 //            @RequestParam(value = "vl", required = false) String value
 //    ) throws IOException {
 //        if (option == null || value == null || option.equals("") || value.equals("")) {
-//            response.sendRedirect(request.getContextPath() + "/home.html");
+//            return null;
 //        } else {
-//            model = new ModelAndView("/front/searchResult");
-//            LoadDefaultData.getAndSetCookieAndScopeOfCategoryAndBookSet(request, response, model);
 //
 //            if (option.matches("n1")) {
-//                searchBookByNameInDB(model, value, session);
-//                getAndSetModelOfMemberAndBookInCart(model, session);
-//                model.addObject("vl", value);
-//                model.addObject("op", option);
+//                searchBookByNameInDB(value);
 //            } else if (option.matches("ct([0-9]){1,}")) {
-//                searchBookByNameAndCategoryInDB(model, option, value, request, session);
-//                getAndSetModelOfMemberAndBookInCart(model, session);
-//                model.addObject("op", option);
+//                searchBookByNameAndCategoryInDB(option, value);
 //            } else if (option.matches("bs([0-9]){1,}")) {
-//                searchBookByNameAndBookSetInDB(model, option, value, request, session);
-//                getAndSetModelOfMemberAndBookInCart(model, session);
-//                model.addObject("op", option);
-//            } else {
-//                model.addObject("noResult", true);
+//                searchBookByNameAndBookSetInDB(option, value);
 //            }
-//            return model;
 //        }
 //        return null;
 //    }

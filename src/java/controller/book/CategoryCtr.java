@@ -45,7 +45,7 @@ public class CategoryCtr {
     }
 
     //get all category
-    @RequestMapping(value = "/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public @ResponseBody
     ArrayList<Category> getAllCategory() {
         try {

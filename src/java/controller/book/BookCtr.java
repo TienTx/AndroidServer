@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "book/")
 public class BookCtr {
 
-    @RequestMapping(value = "get20newbooks", method = RequestMethod.POST)
+    //get list of 20 new books
+    @RequestMapping(value = "get20newbooks", method = RequestMethod.GET)
     public @ResponseBody
     ArrayList<Book> get20NewBooks() {
         try {
@@ -36,6 +37,7 @@ public class BookCtr {
         return null;
     }
 
+    //get book by idBook
     @RequestMapping(value = "getbook", method = RequestMethod.POST)
     public @ResponseBody
     Book getBook(@RequestParam("idBook") String idBook) {

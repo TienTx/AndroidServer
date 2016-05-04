@@ -790,7 +790,7 @@ public class BookDAO {
                 + "JOIN tblBookOrder ON tblBook.idBook = tblBookOrder.idBook "
                 + "JOIN tblPayment ON tblBookOrder.idCart = tblPayment.idCart "
                 + "JOIN tblOrder ON tblPayment.idPayment = tblOrder.idPayment "
-                + "WHERE tblOrder.createDate >= (CURDATE() - 604800) "
+                + "WHERE tblOrder.createDate >= (DATE_SUB(CURDATE(),INTERVAL 7 DAY)) "
                 + "ORDER BY tblBook.idBook DESC LIMIT 10;";
         try {
             ps = conn.prepareStatement(sqlSelect);
@@ -864,7 +864,7 @@ public class BookDAO {
                 + "JOIN tblBookOrder ON tblBook.idBook = tblBookOrder.idBook "
                 + "JOIN tblPayment ON tblBookOrder.idCart = tblPayment.idCart "
                 + "JOIN tblOrder ON tblPayment.idPayment = tblOrder.idPayment "
-                + "WHERE tblOrder.createDate >= (CURDATE() - 2419200) "
+                + "WHERE tblOrder.createDate >= (DATE_SUB(CURDATE(),INTERVAL 30 DAY)) "
                 + "ORDER BY tblBook.idBook DESC LIMIT 10;";
         try {
             ps = conn.prepareStatement(sqlSelect);
@@ -938,7 +938,7 @@ public class BookDAO {
                 + "JOIN tblBookOrder ON tblBook.idBook = tblBookOrder.idBook "
                 + "JOIN tblPayment ON tblBookOrder.idCart = tblPayment.idCart "
                 + "JOIN tblOrder ON tblPayment.idPayment = tblOrder.idPayment "
-                + "WHERE tblOrder.createDate >= (CURDATE() - 29030400) "
+                + "WHERE tblOrder.createDate >= (DATE_SUB(CURDATE(),INTERVAL 365 DAY)) "
                 + "ORDER BY tblBook.idBook DESC LIMIT 10;";
         try {
             ps = conn.prepareStatement(sqlSelect);
@@ -1010,6 +1010,76 @@ public class BookDAO {
                 + "JOIN tblCategory ON tblBook.idCategory = tblCategory.idCategory "
                 + "JOIN tblBookSet ON tblBook.idBookSet = tblBookSet.idBookSet "
                 + "ORDER BY tblBook.idBook DESC LIMIT 5;";
+        try {
+            ps = conn.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String sortLink = MyTool.convertString(rs.getString(15));
+                String bsName = rs.getString(15).substring(8, 9).toUpperCase()
+                        + rs.getString(15).substring(9);
+                BookSet bs = new BookSet(rs.getInt(12), bsName, rs.getString(16), sortLink);
+                sortLink = MyTool.convertString(rs.getString(17));
+                Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
+                sortLink = MyTool.convertString(rs.getString(3));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
+                list.add(book);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<Book> get20NewBooks() {
+        ArrayList<Book> list = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT DISTINCT "
+                + "tblBook.idBook, "
+                + "tblBook.image, "
+                + "tblBook.title, "
+                + "tblBook.author, "
+                + "tblBook.publisher, "
+                + "tblBook.publishYear, "
+                + "tblBook.description, "
+                + "tblBook.originalPrice, "
+                + "tblBook.salePrice, "
+                + "tblBook.quantity, "
+                + "tblBook.idCategory, "
+                + "tblBook.idBookSet, "
+                + "tblBook.votes, "
+                + "tblBook.ratePoint, "
+                + "tblBookSet.name, "
+                + "tblBookSet.description, "
+                + "tblCategory.name, "
+                + "tblCategory.description "
+                + "FROM tblBook "
+                + "JOIN tblCategory ON tblBook.idCategory = tblCategory.idCategory "
+                + "JOIN tblBookSet ON tblBook.idBookSet = tblBookSet.idBookSet "
+                + "ORDER BY tblBook.idBook DESC LIMIT 20;";
         try {
             ps = conn.prepareStatement(sqlSelect);
             rs = ps.executeQuery();

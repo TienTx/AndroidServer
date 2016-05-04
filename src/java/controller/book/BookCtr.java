@@ -10,6 +10,7 @@ import entity.book.Book;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "book/")
 public class BookCtr {
 
-    @RequestMapping(value = "get20newbooks")
+    @RequestMapping(value = "get20newbooks", method = RequestMethod.POST)
     public @ResponseBody
     ArrayList<Book> get20NewBooks() {
         try {
@@ -35,7 +36,7 @@ public class BookCtr {
         return null;
     }
 
-    @RequestMapping(value = "getbook")
+    @RequestMapping(value = "getbook", method = RequestMethod.POST)
     public @ResponseBody
     Book getBook(@RequestParam("idBook") String idBook) {
         try {

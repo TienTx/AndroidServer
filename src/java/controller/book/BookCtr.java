@@ -38,7 +38,7 @@ public class BookCtr {
     }
 
     //get book by idBook
-    @RequestMapping(value = "getbook", method = RequestMethod.POST)
+    @RequestMapping(value = "getbook", method = RequestMethod.GET)
     public @ResponseBody
     Book getBook(@RequestParam("idBook") String idBook) {
         try {

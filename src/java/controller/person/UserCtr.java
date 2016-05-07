@@ -32,13 +32,13 @@ public class UserCtr {
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public @ResponseBody
     String signup(
-            @RequestParam("name") String name,
+            @RequestParam("username") String username,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             @RequestParam("rePassword") String rePassword
     ) {
         String res = "fail";
-        if (name != null && name.length() >= 6 && name.length() <= 30
+        if (username != null && username.length() >= 6 && username.length() <= 30
                 && email != null && email.length() <= 30
                 && password != null && password.length() >= 6 && password.length() <= 30
                 && rePassword.equals(password)) {
@@ -51,7 +51,7 @@ public class UserCtr {
             cus.setEmail(email);
             cus.setFullName(fn);
             cus.setPhoneNum("x");
-            cus.setCustomerMemberUsername(email);
+            cus.setCustomerMemberUsername(username);
             cus.setCustomerMemberPassword(password);
             PersonDAOAbstractFactory customerDAOFactory = PersonDAOFactoryProducer.getDAOFactory("customerDAO");
             try {

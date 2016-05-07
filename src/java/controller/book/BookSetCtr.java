@@ -45,7 +45,7 @@ public class BookSetCtr {
     }
 
     //get all list of bookset
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll", method = RequestMethod.POST)
     public @ResponseBody
     ArrayList<BookSet> getAllBookSet() {
         try {

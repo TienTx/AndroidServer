@@ -22,7 +22,7 @@ import tool.MyTool;
 @Controller
 public class SearchCtr {
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public @ResponseBody
     ArrayList<Book> search(
             @RequestParam("vl") String value) {

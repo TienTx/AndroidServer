@@ -29,9 +29,10 @@
 // * @author zOzDarKzOz
 // */
 //@Controller
+//@RequestMapping(value = "cart/")
 //public class CartCtr {
 //
-//    @RequestMapping(value = "cart.html")
+////    @RequestMapping(value = "save", method = RequestMethod.POST)
 //    public ModelAndView cart(ModelAndView model,
 //            HttpServletRequest request, HttpServletResponse response,
 //            HttpSession session) {

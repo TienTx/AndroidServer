@@ -32,47 +32,26 @@ public class UserCtr {
     @RequestMapping(value = "signup", method = RequestMethod.POST)
     public @ResponseBody
     String signup(
-            @RequestParam("firstName") String firstName,
-            @RequestParam("middleName") String middleName,
-            @RequestParam("lastName") String lastName,
+            @RequestParam("name") String name,
             @RequestParam("email") String email,
-            @RequestParam("phoneNumber") String phoneNumber,
-            @RequestParam("username") String username,
             @RequestParam("password") String password,
-            @RequestParam("rePassword") String rePassword,
-            @RequestParam("number") String number,
-            @RequestParam("lane") String lane,
-            @RequestParam("street") String street,
-            @RequestParam("ward") String ward,
-            @RequestParam("district") String district,
-            @RequestParam("city") String city,
-            @RequestParam("country") String country
+            @RequestParam("rePassword") String rePassword
     ) {
         String res = "fail";
-        if (firstName != null && firstName.length() >= 2 && firstName.length() <= 10
-                && middleName != null && middleName.length() >= 2 && middleName.length() <= 10
-                && lastName != null && lastName.length() >= 2 && lastName.length() <= 10
+        if (name != null && name.length() >= 6 && name.length() <= 30
                 && email != null && email.length() <= 30
-                && phoneNumber != null && phoneNumber.length() >= 2 && phoneNumber.length() <= 12
-                && username != null && username.length() >= 6 && username.length() <= 30
                 && password != null && password.length() >= 6 && password.length() <= 30
-                && rePassword.equals(password)
-                && number != null && number.length() >= 1 && number.length() <= 10
-                && lane != null && lane.length() >= 1 && lane.length() <= 10
-                && street != null && street.length() >= 6 && street.length() <= 20
-                && ward != null && ward.length() >= 6 && ward.length() <= 20
-                && district != null && district.length() >= 6 && district.length() <= 20
-                && city != null && city.length() >= 6 && city.length() <= 20) {
+                && rePassword.equals(password)) {
 
-            Address add = new Address(number, lane, street, ward, district, city, country);
-            FullName fn = new FullName(firstName, middleName, lastName);
+            Address add = new Address("x", "x", "x", "x", "x", "x", "x");
+            FullName fn = new FullName("x", "x", "x");
             PersonAbstractFactory customerFactory = PersonFactoryProducer.getFactory("customer");
             Customer cus = customerFactory.getCustomer("customerMember");
             cus.setAddress(add);
             cus.setEmail(email);
             cus.setFullName(fn);
-            cus.setPhoneNum(phoneNumber);
-            cus.setCustomerMemberUsername(username);
+            cus.setPhoneNum("x");
+            cus.setCustomerMemberUsername(email);
             cus.setCustomerMemberPassword(password);
             PersonDAOAbstractFactory customerDAOFactory = PersonDAOFactoryProducer.getDAOFactory("customerDAO");
             try {
